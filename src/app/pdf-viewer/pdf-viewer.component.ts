@@ -32,7 +32,6 @@ import type {
   PDFViewerOptions,
   ZoomScale
 } from './typings';
-import { PDFSinglePageViewer } from 'pdfjs-dist/web/pdf_viewer';
 
 if (!isSSR()) {
   assign(PDFJS, 'verbosity', PDFJS.VerbosityLevel.INFOS);
@@ -63,7 +62,7 @@ export class PdfViewerComponent
   public eventBus!: PDFJSViewer.EventBus;
   public pdfLinkService!: PDFJSViewer.PDFLinkService;
   public pdfFindController!: PDFJSViewer.PDFFindController;
-  public pdfViewer!: PDFJSViewer.PDFViewer | PDFSinglePageViewer;
+  public pdfViewer!: PDFJSViewer.PDFViewer | PDFJSViewer.PDFSinglePageViewer;
 
   private isVisible = false;
 
@@ -434,6 +433,10 @@ export class PdfViewerComponent
   }
 
   private setupViewer() {
+    if (this.pdfViewer) {
+      this.pdfViewer.setDocument(null as any);
+    }
+
     assign(PDFJS, 'disableTextLayer', !this._renderText);
 
     this.initPDFServices();
