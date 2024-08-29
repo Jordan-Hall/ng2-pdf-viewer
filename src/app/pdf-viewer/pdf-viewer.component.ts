@@ -434,7 +434,7 @@ export class PdfViewerComponent
 
   private setupViewer() {
     if (this.pdfViewer) {
-      this.resetPdfDocument();
+      this.pdfViewer.setDocument(null as any);
     }
 
     assign(PDFJS, 'disableTextLayer', !this._renderText);
